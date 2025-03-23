@@ -1,68 +1,17 @@
-// Select slider elements
-const slider = document.querySelector('.slider');
-const slides = document.querySelectorAll('.slide');
-let currentIndex = 0;
+// Select all videos within the video container
+const videos = document.querySelectorAll(".video-container video");
 
-// Function to update slider position
-const updateSlider = () => {
-    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-};
-
-// Show next slide
-const nextSlide = () => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlider();
-};
-
-// Show previous slide
-const previousSlide = () => {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlider();
-};
-
-// Add event listeners to buttons
-document.querySelector('.next-btn').addEventListener('click', nextSlide);
-document.querySelector('.prev-btn').addEventListener('click', previousSlide);
-
-// Auto-slide every 5 seconds
-setInterval(nextSlide, 5000);
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const dots = document.querySelectorAll('.dot');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.style.opacity = i === index ? '1' : '0';
-        });
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentIndex = index;
-            showSlide(currentIndex);
-        });
+// Add an event listener for resizing the window
+window.addEventListener("resize", () => {
+    // Loop through each video and adjust their styles dynamically
+    videos.forEach((video) => {
+        if (window.innerWidth <= 768) {
+            video.style.width = "100%"; // Full width for smaller screens
+        } else {
+            video.style.width = "45%"; // Side-by-side width for larger screens
+        }
     });
-
-    showSlide(currentIndex);
 });
+
+// Initial adjustment on page load
+window.dispatchEvent(new Event("resize"));
